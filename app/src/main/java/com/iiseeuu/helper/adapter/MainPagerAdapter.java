@@ -14,11 +14,11 @@ import com.iiseeuu.helper.fragment.UserFragment;
  * Author: 30453
  * Date: 2016/12/23 18:05
  */
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
 
     public SparseArray<Fragment> fragments;
 
-    public HomePagerAdapter(FragmentManager fm) {
+    public MainPagerAdapter(FragmentManager fm) {
         super(fm);
         fragments = new SparseArray<>();
     }

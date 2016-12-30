@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">功夫豆</string>
+    <array name="main_tab">
+        <item>首页</item>
+        <item>订单</item>
+        <item>用户</item>
+        <item>打印机</item>
+    </array>
 </resources>

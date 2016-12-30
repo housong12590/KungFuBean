@@ -8,6 +8,7 @@
 
     <include layout="@layout/base_toolbar"/>
 
+
     <com.iiseeuu.helper.widget.NoScrollViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -49,6 +50,5 @@
         </RadioButton>
 
     </RadioGroup>
-
 
 </LinearLayout>

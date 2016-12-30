@@ -22,15 +22,15 @@ public class FacilityEntity {
     private String version;
     private String activation_code;
 
-    private String getId(){
+    public String getId(){
         return id;
     }
 
-    private String getType(){
+    public String getType(){
         return type;
     }
 
-    private String getAlias(){
+    public String getAlias(){
         return alias;
     }
 
@@ -38,15 +38,15 @@ public class FacilityEntity {
         return icon;
     }
 
-    private boolean isOnline(){
+    public boolean isOnline(){
         return is_online;
     }
 
-    private String getTotalPrintCount(){
+    public String getTotalPrintCount(){
         return total_print_count;
     }
 
-    private String getTodayPrintCount(){
+    public String getTodayPrintCount(){
         return today_print_count;
     }
 

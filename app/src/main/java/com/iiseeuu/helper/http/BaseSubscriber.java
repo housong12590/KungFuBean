@@ -3,6 +3,11 @@ package com.iiseeuu.helper.http;
 import android.content.Context;
 import android.os.Looper;
 
+import com.iiseeuu.helper.utils.ToastUtils;
+
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+
 import rx.Subscriber;
 
 /**
@@ -12,11 +17,16 @@ import rx.Subscriber;
 public abstract class BaseSubscriber<T> extends Subscriber<T> implements ProgressCancelListener {
 
     private ProgressDialogHandler dialog;
+    private LoadStatus status;
 
     public BaseSubscriber(Context context) {
         if (context != null) {
             dialog = new ProgressDialogHandler(context, this, true);
         }
+    }
+
+    public BaseSubscriber() {
+
     }
 
     private void showProgressDialog() {
@@ -46,7 +56,11 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements Progres
 
     @Override
     public void onError(Throwable e) {
-
+        e.printStackTrace();
+        if (e instanceof SocketTimeoutException || e instanceof ConnectException) {
+            ToastUtils.show("网络连接超时");
+        }
+        dismissProgressDialog();
     }
 
     public boolean isMainThread() {

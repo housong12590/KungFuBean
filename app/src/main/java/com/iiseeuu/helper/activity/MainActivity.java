@@ -8,19 +8,20 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.iiseeuu.helper.R;
-import com.iiseeuu.helper.adapter.HomePagerAdapter;
+import com.iiseeuu.helper.adapter.MainPagerAdapter;
 import com.iiseeuu.helper.base.BaseActivity;
 
 import butterknife.Bind;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, ViewPager.OnPageChangeListener {
 
-    @Bind(R.id.toolBar) Toolbar toolBar;
     @Bind(R.id.viewPager) ViewPager viewPager;
     @Bind(R.id.rb_home) RadioButton rbHome;
+    @Bind(R.id.toolBar) Toolbar toolbar;
     @Bind(R.id.radioGroup) RadioGroup radioGroup;
     private long exitTime = 0;
-    private HomePagerAdapter adapter;
+    private MainPagerAdapter adapter;
+    private String[] mainTabText;
 
     @Override
     public int getLayoutId() {
@@ -30,16 +31,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     public void initView() {
         rbHome.setChecked(true);
-        toolBar.setTitle("首页");
-        setSupportActionBar(toolBar);
         radioGroup.setOnCheckedChangeListener(this);
-        adapter = new HomePagerAdapter(getSupportFragmentManager());
+        viewPager.addOnPageChangeListener(this);
+        mainTabText = getResources().getStringArray(R.array.main_tab);
+        toolbar.setTitle(mainTabText[0]);
+        setSupportActionBar(toolbar);
+        adapter = new MainPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void initData() {
-
     }
 
     @Override
@@ -74,5 +76,20 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        toolbar.setTitle(mainTabText[position]);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

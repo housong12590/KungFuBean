@@ -6,17 +6,8 @@ package com.iiseeuu.helper.entity;
  */
 public class BaseList {
 
-    private String count;
     private String current_pager;
-    private String total_page;
-
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
-    }
+    private String total_pages;
 
     public String getCurrent_pager() {
         return current_pager;
@@ -26,11 +17,11 @@ public class BaseList {
         this.current_pager = current_pager;
     }
 
-    public String getTotal_page() {
-        return total_page;
+    public String getTotal_pages() {
+        return total_pages;
     }
 
-    public void setTotal_page(String total_page) {
-        this.total_page = total_page;
+    public void setTotal_pages(String total_pages) {
+        this.total_pages = total_pages;
     }
 }

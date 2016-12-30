@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class Orders extends BaseList {
 
-    private List<OrdersEntity> orders;
+    private List<OrdersEntity> designs;
 
-    public List<OrdersEntity> getOrders() {
-        return orders;
+    public List<OrdersEntity> getDesigns() {
+        return designs;
     }
 
-    public void setOrders(List<OrdersEntity> orders) {
-        this.orders = orders;
+    public void setDesigns(List<OrdersEntity> designs) {
+        this.designs = designs;
     }
 }

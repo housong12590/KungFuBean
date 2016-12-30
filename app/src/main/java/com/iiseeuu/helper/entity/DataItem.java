@@ -6,14 +6,22 @@ package com.iiseeuu.helper.entity;
  */
 public class DataItem {
 
-    private String time;
-    private String count;
+    private String date;
+    private String number;
 
-    public String getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
-    public String getCount() {
-        return count;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

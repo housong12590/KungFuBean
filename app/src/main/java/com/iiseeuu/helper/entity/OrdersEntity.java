@@ -7,43 +7,43 @@ package com.iiseeuu.helper.entity;
 public class OrdersEntity {
 
     private String id;
-    private String print_time;
-    private String create_time;
-    private String image_url;
-    private String create_city;
-    private String we_chat_version;
-    private FacilityEntity facility;
-    private UserEntity user;
+    private String finish_url;
+    private String create_at;
+    private String print_id;
+    private String print_name;
+    private String city;
+    private String nickname;
+    private String headimgurl;
 
     public String getId() {
         return id;
     }
 
-    public String getPrintTime() {
-        return print_time;
+    public String getFinishUrl() {
+        return finish_url;
     }
 
-    public String getCreateTime() {
-        return create_time;
+    public String getCreateAt() {
+        return create_at;
     }
 
-    public String getImageUrl() {
-        return image_url;
+    public String getPrintId() {
+        return print_id;
     }
 
-    public String getCreateCity() {
-        return create_city;
+    public String getPrintName() {
+        return print_name;
     }
 
-    public String getWeChatVersion() {
-        return we_chat_version;
+    public String getCity() {
+        return city;
     }
 
-    public FacilityEntity getFacility() {
-        return facility;
+    public String getNickname() {
+        return nickname;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getHeadimgurl() {
+        return headimgurl;
     }
 }
