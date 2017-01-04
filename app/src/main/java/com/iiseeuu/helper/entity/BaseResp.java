@@ -6,15 +6,15 @@ package com.iiseeuu.helper.entity;
  */
 public class BaseResp<T> {
 
-    private String status_code;
+    private int status_code;
     private String msg;
     private T data;
 
-    public String getStatusCode() {
+    public int getStatusCode() {
         return status_code;
     }
 
-    public String getMsg() {
+    public String getMessage() {
         return msg;
     }
 

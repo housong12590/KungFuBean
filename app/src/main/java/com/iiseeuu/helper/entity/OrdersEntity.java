@@ -1,14 +1,19 @@
 package com.iiseeuu.helper.entity;
 
+import android.text.TextUtils;
+
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.iiseeuu.helper.adapter.OrdersListAdapter;
+
 /**
  * Author: 30453
  * Date: 2016/12/23 14:41
  */
-public class OrdersEntity {
+public class OrdersEntity extends MultiItemEntity {
 
     private String id;
     private String finish_url;
-    private String create_at;
+    private String created_at;
     private String print_id;
     private String print_name;
     private String city;
@@ -23,8 +28,8 @@ public class OrdersEntity {
         return finish_url;
     }
 
-    public String getCreateAt() {
-        return create_at;
+    public String getCreated_at() {
+        return created_at;
     }
 
     public String getPrintId() {
@@ -45,5 +50,10 @@ public class OrdersEntity {
 
     public String getHeadimgurl() {
         return headimgurl;
+    }
+
+    @Override
+    public int getItemType() {
+        return TextUtils.isEmpty(id) ? OrdersListAdapter.EMPTY_ITEM : OrdersListAdapter.NORMAL_ITEM;
     }
 }

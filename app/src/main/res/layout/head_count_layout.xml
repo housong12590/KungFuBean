@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/tv_count"
+          android:layout_width="match_parent"
+          android:layout_height="24dp"
+          android:gravity="center_vertical"
+          android:paddingBottom="5dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="5dp"
+          android:text="全部用户共0位"
+          android:textColor="@color/text_84"
+          android:textSize="@dimen/text_size_12">
+</TextView>

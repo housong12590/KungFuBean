@@ -1,69 +1,56 @@
 package com.iiseeuu.helper.entity;
 
+import java.io.Serializable;
+
 /**
  * Author: 30453
  * Date: 2016/12/23 14:40
  */
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     private String id;
-    private String name;
-    private String avatar;
-    private String print_count;
+    private String nickname;
+    private String headimgurl;
+    private String prints_count;
     private boolean is_owner;
-    private String gender;
-    private String age;
-    private boolean isAttention;
-    private String recently_active_time;
-    private String recently_active_city;
-    private String create_time;
-    private FacilityEntity facility;
+    private boolean subscribe;
+    private String created_at;
+    private String sex;
+    private String recently_print_time;
 
     public String getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getHeadimgurl() {
+        return headimgurl;
     }
 
-    public String getPrintCount() {
-        return print_count;
+    public String getPrints_count() {
+        return prints_count;
     }
 
-    public boolean isOwner() {
+    public boolean is_owner() {
         return is_owner;
     }
 
-    public String getGender() {
-        return gender;
+    public boolean isSubscribe() {
+        return subscribe;
     }
 
-    public String getAge() {
-        return age;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public boolean isAttention() {
-        return isAttention;
+    public String getSex() {
+        return sex == null ? "未知" : sex.equals("1") ? "男" : "女";
     }
 
-    public String getRecentlyActiveTime() {
-        return recently_active_time;
-    }
-
-    public String getRecentlyActiveCity() {
-        return recently_active_city;
-    }
-
-    public String getCreateTime() {
-        return create_time;
-    }
-
-    public FacilityEntity getFacility() {
-        return facility;
+    public String getRecently_print_time() {
+        return recently_print_time;
     }
 }

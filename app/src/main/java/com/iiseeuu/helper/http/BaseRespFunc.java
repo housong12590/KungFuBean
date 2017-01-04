@@ -12,8 +12,8 @@ import rx.functions.Func1;
 public class BaseRespFunc<T> implements Func1<BaseResp<T>, Observable<T>> {
     @Override
     public Observable<T> call(BaseResp<T> resp) {
-        if (Integer.parseInt(resp.getStatusCode()) != 200) {
-            return Observable.error(new Exception());
+        if (resp.getStatusCode() != 200) {
+            return Observable.error(new Exception(resp.getMessage()));
         }
         return Observable.just(resp.getData());
     }

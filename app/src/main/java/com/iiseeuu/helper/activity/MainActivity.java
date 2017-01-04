@@ -1,7 +1,6 @@
 package com.iiseeuu.helper.activity;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,15 +12,13 @@ import com.iiseeuu.helper.base.BaseActivity;
 
 import butterknife.Bind;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     @Bind(R.id.viewPager) ViewPager viewPager;
     @Bind(R.id.rb_home) RadioButton rbHome;
-    @Bind(R.id.toolBar) Toolbar toolbar;
     @Bind(R.id.radioGroup) RadioGroup radioGroup;
     private long exitTime = 0;
     private MainPagerAdapter adapter;
-    private String[] mainTabText;
 
     @Override
     public int getLayoutId() {
@@ -32,12 +29,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     public void initView() {
         rbHome.setChecked(true);
         radioGroup.setOnCheckedChangeListener(this);
-        viewPager.addOnPageChangeListener(this);
-        mainTabText = getResources().getStringArray(R.array.main_tab);
-        toolbar.setTitle(mainTabText[0]);
-        setSupportActionBar(toolbar);
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(4);
     }
 
     @Override
@@ -76,20 +70,5 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        toolbar.setTitle(mainTabText[position]);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 }

@@ -2,12 +2,15 @@ package com.iiseeuu.helper.http;
 
 import android.content.Context;
 import android.os.Looper;
+import android.view.View;
 
 import com.iiseeuu.helper.utils.ToastUtils;
+import com.iiseeuu.helper.widget.loader.LoadingAndRetryManager;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.Subscriber;
 
 /**
@@ -16,6 +19,8 @@ import rx.Subscriber;
  */
 public abstract class BaseSubscriber<T> extends Subscriber<T> implements ProgressCancelListener {
 
+    protected LoadingAndRetryManager lm = null;
+    private PtrFrameLayout ptrFrameLayout;
     private ProgressDialogHandler dialog;
     private LoadStatus status;
 
@@ -27,6 +32,15 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements Progres
 
     public BaseSubscriber() {
 
+    }
+
+    public BaseSubscriber(LoadingAndRetryManager val, LoadStatus state) {
+        View view = val.getContentView();
+        if (view instanceof PtrFrameLayout) {
+            ptrFrameLayout = (PtrFrameLayout) view;
+        }
+        lm = val;
+        this.status = state;
     }
 
     private void showProgressDialog() {
@@ -45,6 +59,9 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements Progres
     @Override
     public void onStart() {
         if (isMainThread()) {
+            if (lm != null && status == LoadStatus.LOADING) {
+                lm.showLoading();
+            }
             showProgressDialog();
         }
     }
@@ -52,15 +69,29 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements Progres
     @Override
     public void onCompleted() {
         dismissProgressDialog();
+        if (ptrFrameLayout != null) {
+            ptrFrameLayout.refreshComplete();
+        }
     }
 
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
+        dismissProgressDialog();
+        if (lm != null && status == LoadStatus.LOADING) {
+            lm.showRetry();
+        }
+        if (dialog != null) {
+            dismissProgressDialog();
+        }
+        if (ptrFrameLayout != null) {
+            ptrFrameLayout.refreshComplete();
+        }
         if (e instanceof SocketTimeoutException || e instanceof ConnectException) {
             ToastUtils.show("网络连接超时");
+            return;
         }
-        dismissProgressDialog();
+        ToastUtils.show(e.getMessage());
     }
 
     public boolean isMainThread() {

@@ -20,8 +20,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private int mOrientation = LinearLayoutManager.VERTICAL;
     private int mItemSize = 1;
     private Paint mPaint;
-    private int dividerColor = Color.parseColor("#DADADA");
+    private int dividerColor = Color.parseColor("#f5f5f5");
     private int margeSize = 0;
+    private boolean lastLine;
 
     public DividerItemDecoration(Context context, int margeSize) {
         this(context, margeSize, LinearLayoutManager.VERTICAL);

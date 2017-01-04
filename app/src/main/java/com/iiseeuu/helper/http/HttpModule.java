@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HttpModule {
 
-    private static final String BASE_URL = "http://1025.ngrok.cc/mobile/v1/";
+    private static final String BASE_URL = "http://epson.gongfudou.com/mobile/v1/";
 
     public static ApiService newHttpApi() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

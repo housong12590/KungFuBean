@@ -19,4 +19,13 @@ public class TimeUtils {
         }
         return 0;
     }
+
+    public static String dateToString(String date) {
+        long parseLong = 1;
+        if (!TextUtils.isEmpty(date) && TextUtils.isDigitsOnly(date)) {
+            parseLong = Long.parseLong(date) * 1000;
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(parseLong));
+        }
+        return "";
+    }
 }
