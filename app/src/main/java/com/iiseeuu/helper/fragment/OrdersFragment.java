@@ -2,6 +2,7 @@ package com.iiseeuu.helper.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.iiseeuu.helper.R;
@@ -27,7 +28,8 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Author: 30453
  * Date: 2016/12/24 11:45
  */
-public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener, OnRefreshListener {
+public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener, OnRefreshListener,
+        BaseQuickAdapter.OnRecyclerViewItemClickListener {
 
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
@@ -47,8 +49,14 @@ public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.Req
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         adapter = new OrdersListAdapter(Collections.emptyList());
         adapter.openLoadMore(PAGE_SIZE, true);
-        adapter.setOnLoadMoreListener(this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void setListener() {
+        adapter.setOnLoadMoreListener(this);
+        adapter.setOnRecyclerViewItemClickListener(this);
+
     }
 
     @Override
@@ -90,5 +98,11 @@ public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.Req
     @Override
     public void onRetry() {
         initData(LoadStatus.LOADING);
+    }
+
+    @Override
+    public void onItemClick(View view, int i) {
+//        OrdersEntity item = (OrdersEntity) adapter.getItem(i);
+//        OrdersDetailActivity.start(getActivity(),item.getId());
     }
 }

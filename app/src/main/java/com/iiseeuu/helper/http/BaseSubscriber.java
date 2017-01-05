@@ -9,6 +9,7 @@ import com.iiseeuu.helper.widget.loader.LoadingAndRetryManager;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.Subscriber;
@@ -56,6 +57,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements Progres
         }
     }
 
+
     @Override
     public void onStart() {
         if (isMainThread()) {
@@ -87,11 +89,11 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements Progres
         if (ptrFrameLayout != null) {
             ptrFrameLayout.refreshComplete();
         }
-        if (e instanceof SocketTimeoutException || e instanceof ConnectException) {
-            ToastUtils.show("网络连接超时");
-            return;
+        if (e instanceof SocketTimeoutException || e instanceof ConnectException || e instanceof UnknownHostException) {
+            ToastUtils.show("网络连接异常");
+        } else {
+            ToastUtils.show(e.getMessage());
         }
-        ToastUtils.show(e.getMessage());
     }
 
     public boolean isMainThread() {

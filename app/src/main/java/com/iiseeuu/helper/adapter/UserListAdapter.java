@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.iiseeuu.helper.R;
@@ -31,6 +33,9 @@ public class UserListAdapter extends BaseQuickAdapter<UserEntity> {
         ImageView avatar = holder.getView(R.id.avatar);
         Glide.with(mContext).load(params.getHeadimgurl())
                 .asBitmap()
+                .thumbnail(0.3f)
+                .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .error(R.drawable.def_avatar)
                 .placeholder(R.drawable.def_avatar)
                 .into(avatar);

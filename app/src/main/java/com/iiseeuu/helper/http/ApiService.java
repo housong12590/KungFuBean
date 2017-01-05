@@ -1,6 +1,5 @@
 package com.iiseeuu.helper.http;
 
-import com.iiseeuu.helper.entity.AuthUser;
 import com.iiseeuu.helper.entity.BaseResp;
 import com.iiseeuu.helper.entity.DataItem;
 import com.iiseeuu.helper.entity.DataStats;
@@ -46,7 +45,7 @@ public interface ApiService {
     @GET("designs")
     Observable<BaseResp<Orders>> getAllOrderList(@Query("access_token") String accessToken, @Query("page") String page, @Query("page_size") String pageSize);
 
-    //获取订单列表
+    //获取用户订单列表
     @GET("person/{id}/designs")
     Observable<BaseResp<Orders>> getUserOrderList(@Path("id") String id, @Query("access_token") String accessToken, @Query("page") String page, @Query("page_size") String pageSize);
 
@@ -67,10 +66,10 @@ public interface ApiService {
     Observable<BaseResp<Prints>> getPrintList(@Query("access_token") String token, @Query("page") String page, @Query("page_size") String pageSize);
 
     //打印机详情
-    @GET("")
-    Observable<BaseResp<PrintEntity>> getPrintDetail(@Query("access_token") String token, @Query("id") String id);
+    @GET("print/{id}")
+    Observable<BaseResp<PrintEntity>> getPrintDetail( @Path("id") String id,@Query("access_token") String toke);
 
     //获取授权用户
-    @GET("")
-    Observable<BaseResp<AuthUser>> getAuthUserList(@Query("access_token") String token, @Query("id") String id, @Query("page") String page, @Query("page_size") String pageSize);
+    @GET("print/{id}/print_authorizations")
+    Observable<BaseResp<Users>> getAccreditUserList(@Path("id") String id, @Query("access_token") String token, @Query("page") String page, @Query("page_size") String pageSize);
 }

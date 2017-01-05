@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.iiseeuu.helper.R;
-import com.iiseeuu.helper.adapter.OrdersListAdapter;
+import com.iiseeuu.helper.adapter.AccreditUserAdapter;
 import com.iiseeuu.helper.base.BaseActivity;
-import com.iiseeuu.helper.entity.Orders;
-import com.iiseeuu.helper.entity.OrdersEntity;
-import com.iiseeuu.helper.entity.PrintEntity;
+import com.iiseeuu.helper.entity.Users;
 import com.iiseeuu.helper.http.BaseRespFunc;
 import com.iiseeuu.helper.http.BaseSubscriber;
 import com.iiseeuu.helper.http.HttpModule;
@@ -27,44 +24,43 @@ import com.iiseeuu.helper.widget.loader.LoadingAndRetryManager;
 import java.util.Collections;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class PrintDetailActivity extends BaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class AccreditUserActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener, OnRefreshListener {
 
     @Bind(R.id.toolBar) Toolbar toolbar;
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.ptrFrameLayout) PtrFrameLayout ptrFrameLayout;
-    private PrintEntity entity;
-    private OrdersListAdapter adapter;
+    private String id;
+    private AccreditUserAdapter adapter;
     private LoadingAndRetryManager layoutManager;
 
-    public static void start(Context context, PrintEntity entity) {
-        Intent intent = new Intent(context, PrintDetailActivity.class);
-        intent.putExtra("entity", entity);
+    public static void start(Context context, String id) {
+        Intent intent = new Intent(context, AccreditUserActivity.class);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
 
     @Override
     public void parseIntent(Intent intent) {
-        entity = (PrintEntity) intent.getSerializableExtra("entity");
+        id = intent.getStringExtra("id");
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_print_detail;
+        return R.layout.activity_accredit_user;
     }
 
     @Override
     public void initView() {
-        toolbar.setTitle("打印机详情");
+        toolbar.setTitle("授权用户");
         toolbar.setNavigationIcon(R.drawable.back_icon);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
-        adapter = new OrdersListAdapter(Collections.emptyList());
-        adapter.openLoadMore(PAGE_SIZE, true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
+        adapter = new AccreditUserAdapter(Collections.emptyList());
+        adapter.openLoadMore(PAGE_SIZE, true);
         recyclerView.setAdapter(adapter);
         layoutManager = bindRefreshView(ptrFrameLayout, this);
     }
@@ -83,30 +79,37 @@ public class PrintDetailActivity extends BaseActivity implements OnRefreshListen
     public void initDataFromNet(LoadStatus status) {
         String accessToken = SpHelper.getAccessToken();
         CURRENT_PAGE = status == LoadStatus.MORE ? CURRENT_PAGE : 1;
-        HttpModule.newHttpApi().getPrintOrderList(entity.getId(), accessToken, String.valueOf(CURRENT_PAGE), String.valueOf(PAGE_SIZE))
+        HttpModule.newHttpApi().getAccreditUserList(id, accessToken, String.valueOf(CURRENT_PAGE), String.valueOf(PAGE_SIZE))
                 .compose(RxUtils.rxSchedulerHelper())
                 .flatMap(new BaseRespFunc<>())
-                .subscribe(new BaseSubscriber<Orders>(layoutManager, status) {
+                .subscribe(new BaseSubscriber<Users>(layoutManager, status) {
                     @Override
-                    public void onNext(Orders orders) {
+                    public void onNext(Users users) {
                         if (status == LoadStatus.MORE) {
-                            boolean isNextLoad = CURRENT_PAGE < Integer.parseInt(orders.getTotal_pages());
-                            adapter.notifyDataChangedAfterLoadMore(orders.getDesigns(), isNextLoad);
+                            boolean isNextLoad = CURRENT_PAGE < Integer.parseInt(users.getTotal_pages());
+                            adapter.notifyDataChangedAfterLoadMore(users.getUsers(), isNextLoad);
                         } else {
-                            if (orders.getDesigns().isEmpty()) {
-                                orders.getDesigns().add(new OrdersEntity());
+                            if (users.getUsers().isEmpty()) {
+                                layoutManager.showEmpty();
+                            } else {
+                                adapter.setNewData(users.getUsers());
+                                layoutManager.showContent();
                             }
-                            layoutManager.showContent();
-                            adapter.setNewData(orders.getDesigns());
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("onError");
+                        super.onError(e);
                     }
                 });
     }
 
-
-    @OnClick(R.id.tv_accreditUsers)
-    public void onClick(View view) {
-        AccreditUserActivity.start(this, entity.getId());
+    @Override
+    public void onLoadMoreRequested() {
+        CURRENT_PAGE++;
+        initDataFromNet(LoadStatus.MORE);
     }
 
     @Override
@@ -117,11 +120,5 @@ public class PrintDetailActivity extends BaseActivity implements OnRefreshListen
     @Override
     public void onRetry() {
         initDataFromNet(LoadStatus.LOADING);
-    }
-
-    @Override
-    public void onLoadMoreRequested() {
-        CURRENT_PAGE++;
-        initDataFromNet(LoadStatus.MORE);
     }
 }

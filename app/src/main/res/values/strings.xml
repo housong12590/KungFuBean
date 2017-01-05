@@ -1,9 +1,24 @@
 <resources>
     <string name="app_name">功夫豆</string>
+    <string name="user_count">%1$s共%2$s位</string>
+
+
     <array name="main_tab">
         <item>首页</item>
         <item>订单</item>
         <item>用户</item>
         <item>打印机</item>
+    </array>
+
+    <array name="user_type_name">
+        <item>全部用户</item>
+        <item>机主用户</item>
+        <item>普通用户</item>
+    </array>
+
+    <array name="user_type">
+        <item></item>
+        <item>owner</item>
+        <item>user</item>
     </array>
 </resources>

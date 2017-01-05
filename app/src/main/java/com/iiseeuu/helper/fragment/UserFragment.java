@@ -45,6 +45,9 @@ public class UserFragment extends BaseFragment implements BaseQuickAdapter.Reque
     private UserListAdapter adapter;
     private LoadingAndRetryManager layoutManager;
     private String type;
+    private String typeName = "全部用户";
+    private String[] userTypeName;
+    private String[] userType;
 
     @Override
     public int getLayoutId() {
@@ -62,6 +65,8 @@ public class UserFragment extends BaseFragment implements BaseQuickAdapter.Reque
         View view = View.inflate(getActivity(), R.layout.head_count_layout, null);
         tvCount = (TextView) view.findViewById(R.id.tv_count);
         adapter.addHeaderView(view);
+        userTypeName = getResources().getStringArray(R.array.user_type_name);
+        userType = getResources().getStringArray(R.array.user_type);
     }
 
     @Override
@@ -75,13 +80,13 @@ public class UserFragment extends BaseFragment implements BaseQuickAdapter.Reque
     }
 
     private void rightListener() {
-        String[] str = {null, "owner", "user"};
-        new CustomPopWindow(getActivity(), Arrays.asList("全部用户", "机主用户", "普通用户"))
+        new CustomPopWindow(getActivity(), Arrays.asList(userTypeName))
                 .setOnItemClickListener((view, position) -> {
-                    if (Objects.equals(type, str[position])) {
+                    if (Objects.equals(type, userType[position])) {
                         return;
                     }
-                    type = str[position];
+                    type = userType[position];
+                    typeName = userTypeName[position];
                     initData(LoadStatus.LOADING);
                 }).show(titleLayout.getRightView(), 0, 10);
     }
@@ -96,6 +101,7 @@ public class UserFragment extends BaseFragment implements BaseQuickAdapter.Reque
                 .subscribe(new BaseSubscriber<Users>(layoutManager, status) {
                     @Override
                     public void onNext(Users users) {
+                        tvCount.setText(getString(R.string.user_count,typeName,users.getUserCount()));
                         if (status == LoadStatus.MORE) {
                             boolean isNextLoad = CURRENT_PAGE < Integer.parseInt(users.getTotal_pages());
                             adapter.notifyDataChangedAfterLoadMore(users.getUsers(), isNextLoad);

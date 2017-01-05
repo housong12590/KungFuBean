@@ -23,9 +23,10 @@
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.TendencyActivity"/>
-        <activity android:name=".activity.UserDetailActivity">
-        </activity>
-        <activity android:name=".activity.PrintDetailActivity">
+        <activity android:name=".activity.UserDetailActivity"/>
+        <activity android:name=".activity.PrintDetailActivity"/>
+        <activity android:name=".activity.OrdersDetailActivity"/>
+        <activity android:name=".activity.AccreditUserActivity">
         </activity>
     </application>
 

@@ -144,6 +144,7 @@ public class UserDetailActivity extends BaseActivity implements BaseQuickAdapter
 
     @Override
     public void onLoadMoreRequested() {
+        CURRENT_PAGE++;
         initDataFromNet(LoadStatus.MORE);
     }
 

@@ -3,6 +3,8 @@ package com.iiseeuu.helper.adapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.iiseeuu.helper.R;
@@ -37,6 +39,9 @@ public class OrdersListAdapter extends BaseMultiItemQuickAdapter<OrdersEntity> {
                 holder.setText(R.id.tv_type, params.getPrintName());
                 Glide.with(mContext).load(params.getFinishUrl())
                         .asBitmap()
+                        .thumbnail(0.3f)
+                        .priority(Priority.HIGH)
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT )
                         .placeholder(R.drawable.def_icon)
                         .error(R.drawable.def_icon)
                         .into((ImageView) holder.getView(R.id.image));
