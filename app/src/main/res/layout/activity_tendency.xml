@@ -7,10 +7,20 @@
 
     <include layout="@layout/base_toolbar"/>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+
+    <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_margin="10dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_margin="10dp"/>
+
+
+    </LinearLayout>
 
 </LinearLayout>

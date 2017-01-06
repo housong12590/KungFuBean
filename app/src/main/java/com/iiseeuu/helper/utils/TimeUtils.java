@@ -11,13 +11,13 @@ import java.util.Date;
  */
 public class TimeUtils {
 
-    public static float dateToDay(String date) {
+    public static String dateToDay(String date) {
         long parseLong = 1;
         if (!TextUtils.isEmpty(date) && TextUtils.isDigitsOnly(date)) {
             parseLong = Long.parseLong(date) * 1000;
-            return Float.parseFloat(new SimpleDateFormat("dd").format(new Date(parseLong)));
+            return new SimpleDateFormat("dd").format(new Date(parseLong));
         }
-        return 0;
+        return "";
     }
 
     public static String dateToString(String date) {

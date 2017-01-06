@@ -97,12 +97,6 @@ public class AccreditUserActivity extends BaseActivity implements BaseQuickAdapt
                             }
                         }
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println("onError");
-                        super.onError(e);
-                    }
                 });
     }
 

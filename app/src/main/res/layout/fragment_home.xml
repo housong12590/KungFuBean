@@ -11,10 +11,19 @@
         android:layout_height="wrap_content"
         app:tl_title="首页"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptrFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:overScrollMode="never"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never"/>
+
+    </in.srain.cube.views.ptr.PtrFrameLayout>
 </LinearLayout>

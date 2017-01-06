@@ -37,6 +37,8 @@ public class OrdersListAdapter extends BaseMultiItemQuickAdapter<OrdersEntity> {
                 holder.setText(R.id.tv_time, TimeUtils.dateToString(params.getCreated_at()));
                 holder.setText(R.id.tv_city, params.getCity());
                 holder.setText(R.id.tv_type, params.getPrintName());
+                ImageView image = holder.getView(R.id.image);
+                holder.setOnClickListener(R.id.image,new OnItemChildClickListener());
                 Glide.with(mContext).load(params.getFinishUrl())
                         .asBitmap()
                         .thumbnail(0.3f)
@@ -44,7 +46,7 @@ public class OrdersListAdapter extends BaseMultiItemQuickAdapter<OrdersEntity> {
                         .diskCacheStrategy(DiskCacheStrategy.RESULT )
                         .placeholder(R.drawable.def_icon)
                         .error(R.drawable.def_icon)
-                        .into((ImageView) holder.getView(R.id.image));
+                        .into(image);
                 break;
             case EMPTY_ITEM:
 

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.iiseeuu.helper.R;
@@ -20,6 +21,7 @@ import com.iiseeuu.helper.http.HttpModule;
 import com.iiseeuu.helper.http.LoadStatus;
 import com.iiseeuu.helper.utils.RxUtils;
 import com.iiseeuu.helper.utils.SpHelper;
+import com.iiseeuu.helper.utils.TimeUtils;
 import com.iiseeuu.helper.widget.DividerItemDecoration;
 import com.iiseeuu.helper.widget.OnRefreshListener;
 import com.iiseeuu.helper.widget.loader.LoadingAndRetryManager;
@@ -32,6 +34,15 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class PrintDetailActivity extends BaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
+    @Bind(R.id.tv_alias) TextView tvAlias;
+    @Bind(R.id.tv_nickname) TextView tvNickName;
+    @Bind(R.id.tv_type) TextView tvType;
+    @Bind(R.id.tv_mode) TextView tvMode;
+    @Bind(R.id.tv_ip) TextView tvIp;
+    @Bind(R.id.tv_printCount) TextView tvPrintCount;
+    @Bind(R.id.tv_printNewCount) TextView tvPrintNewCount;
+    @Bind(R.id.tv_createdAt) TextView tvCreatedAt;
+    @Bind(R.id.tv_accreditUsers) TextView tvAccreditUsers;
     @Bind(R.id.toolBar) Toolbar toolbar;
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.ptrFrameLayout) PtrFrameLayout ptrFrameLayout;
@@ -67,6 +78,7 @@ public class PrintDetailActivity extends BaseActivity implements OnRefreshListen
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
         recyclerView.setAdapter(adapter);
         layoutManager = bindRefreshView(ptrFrameLayout, this);
+        setHeadViewData();
     }
 
     @Override
@@ -76,7 +88,26 @@ public class PrintDetailActivity extends BaseActivity implements OnRefreshListen
 
     @Override
     public void initData() {
+        HttpModule.newHttpApi().getPrintDetail(entity.getId(), SpHelper.getAccessToken())
+                .compose(RxUtils.rxSchedulerHelper())
+                .flatMap(new BaseRespFunc<>())
+                .subscribe(new BaseSubscriber<PrintEntity>() {
+                    @Override
+                    public void onNext(PrintEntity entity) {
 
+                    }
+                });
+    }
+
+    private void setHeadViewData() {
+        tvAlias.setText(entity.getAlias());
+        tvNickName.setText(entity.getNickname());
+        tvType.setText(entity.getType());
+        tvMode.setText(entity.isAuto() ? "自动" : "手动");
+        tvIp.setText(entity.getActiveIp());
+        tvPrintCount.setText(entity.getDesignsCount());
+        tvPrintNewCount.setText(entity.getTodayDesignsCount());
+        tvCreatedAt.setText(TimeUtils.dateToString(entity.getCreatedAt()));
     }
 
     @Override

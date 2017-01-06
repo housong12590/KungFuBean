@@ -16,23 +16,29 @@ import com.iiseeuu.helper.entity.Num;
 import com.iiseeuu.helper.http.BaseRespFunc;
 import com.iiseeuu.helper.http.BaseSubscriber;
 import com.iiseeuu.helper.http.HttpModule;
+import com.iiseeuu.helper.http.LoadStatus;
 import com.iiseeuu.helper.utils.RxUtils;
 import com.iiseeuu.helper.utils.SpHelper;
+import com.iiseeuu.helper.widget.OnRefreshListener;
 import com.iiseeuu.helper.widget.RecyclerSpace;
+import com.iiseeuu.helper.widget.loader.LoadingAndRetryManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Author: 30453
  * Date: 2016/12/23 18:05
  */
-public class HomeFragment extends BaseFragment implements BaseQuickAdapter.OnRecyclerViewItemClickListener {
+public class HomeFragment extends BaseFragment implements BaseQuickAdapter.OnRecyclerViewItemClickListener, OnRefreshListener {
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.ptrFrameLayout) PtrFrameLayout ptrFrameLayout;
     private HomePageAdapter adapter;
+    private LoadingAndRetryManager layoutManager;
 
     @Override
     public int getLayoutId() {
@@ -41,6 +47,7 @@ public class HomeFragment extends BaseFragment implements BaseQuickAdapter.OnRec
 
     @Override
     public void initView() {
+        layoutManager = bindRefreshView(ptrFrameLayout, this);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recyclerView.addItemDecoration(new RecyclerSpace(3, Color.parseColor("#e0e0e0"), 1));
         adapter = new HomePageAdapter(handleData(null));
@@ -50,11 +57,17 @@ public class HomeFragment extends BaseFragment implements BaseQuickAdapter.OnRec
 
     @Override
     public void initData() {
+
+    }
+
+    @Override
+    public void initData(LoadStatus status) {
         HttpModule.newHttpApi().getDataStats(SpHelper.getAccessToken()).compose(RxUtils.rxSchedulerHelper())
-                .flatMap(new BaseRespFunc<>()).subscribe(new BaseSubscriber<DataStats>() {
+                .flatMap(new BaseRespFunc<>()).subscribe(new BaseSubscriber<DataStats>(layoutManager,status) {
             @Override
             public void onNext(DataStats response) {
                 adapter.setNewData(handleData(response));
+                layoutManager.showContent();
             }
         });
     }
@@ -83,5 +96,15 @@ public class HomeFragment extends BaseFragment implements BaseQuickAdapter.OnRec
                 TendencyActivity.start(getActivity(), Constant.PRINTS_KEY, Constant.PRINTS_NAME);
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        initData(LoadStatus.REFRESH);
+    }
+
+    @Override
+    public void onRetry() {
+        initData(LoadStatus.LOADING);
     }
 }

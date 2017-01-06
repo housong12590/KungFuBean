@@ -151,10 +151,6 @@ public class LoadingAndRetryManager {
         mLoadingAndRetryLayout.showContent();
     }
 
-    public void setEmptyViewId(int layoutId){
-        this.BASE_EMPTY_LAYOUT_ID = layoutId;
-    }
-
     /**
      * 空白界面类型
      */

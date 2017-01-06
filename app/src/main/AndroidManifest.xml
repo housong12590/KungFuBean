@@ -20,14 +20,22 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--登录-->
         <activity android:name=".activity.LoginActivity"/>
+        <!--主页-->
         <activity android:name=".activity.MainActivity"/>
+        <!--折线图-->
         <activity android:name=".activity.TendencyActivity"/>
+        <!--用户详情-->
         <activity android:name=".activity.UserDetailActivity"/>
+        <!--打印机详情-->
         <activity android:name=".activity.PrintDetailActivity"/>
+        <!--订单详情-->
         <activity android:name=".activity.OrdersDetailActivity"/>
-        <activity android:name=".activity.AccreditUserActivity">
-        </activity>
+        <!--授权用户-->
+        <activity android:name=".activity.AccreditUserActivity"/>
+        <!--图片预览-->
+        <activity android:name=".activity.ImagePreviewActivity"/>
     </application>
 
 </manifest>

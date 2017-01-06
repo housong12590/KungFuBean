@@ -6,16 +6,19 @@ import java.io.Serializable;
  * Author: 30453
  * Date: 2016/12/23 14:39
  */
-public class PrintEntity implements Serializable{
+public class PrintEntity implements Serializable {
 
 
     private String id;
     private String name;
     private String alias;
+    private String type;
     private String user_nickname;
-    private String total_print_count;
-    private String today_print_count;
+    private String created_at;
+    private String designs_count;
+    private String today_designs_count;
     private boolean online;
+    private boolean is_auto;
     private String icon;
     private String pc_os;
     private String pc_os_version;
@@ -23,35 +26,46 @@ public class PrintEntity implements Serializable{
     private String pc_memory;
     private String pc_storage;
     private String last_active_time;
-    private String last_active_ip;
+    private String active_ip;
 
+    public String getCreatedAt() {
+        return created_at;
+    }
 
-    public String getPc_os() {
+    public boolean isAuto() {
+        return is_auto;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getPcOs() {
         return pc_os;
     }
 
-    public String getPc_os_version() {
+    public String getPcOsVersion() {
         return pc_os_version;
     }
 
-    public String getPc_cpu() {
+    public String getPcCpu() {
         return pc_cpu;
     }
 
-    public String getPc_memory() {
+    public String getPcMemory() {
         return pc_memory;
     }
 
-    public String getPc_storage() {
+    public String getPcStorage() {
         return pc_storage;
     }
 
-    public String getLast_active_time() {
+    public String getLastActiveTime() {
         return last_active_time;
     }
 
-    public String getLast_active_ip() {
-        return last_active_ip;
+    public String getActiveIp() {
+        return active_ip;
     }
 
     public String getIcon() {
@@ -74,12 +88,12 @@ public class PrintEntity implements Serializable{
         return user_nickname;
     }
 
-    public String getTotalPrintCount() {
-        return total_print_count;
+    public String getDesignsCount() {
+        return designs_count;
     }
 
-    public String getTodayPrintCount() {
-        return today_print_count;
+    public String getTodayDesignsCount() {
+        return today_designs_count;
     }
 
     public boolean isOnline() {

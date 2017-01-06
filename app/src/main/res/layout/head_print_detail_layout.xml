@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_alias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="宋慧乔家的打印机23"
@@ -35,20 +36,35 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="机主名称 : 楠竹"
+                    android:text="机主名称 : "
                     android:textColor="@color/text_4a"
                     android:textSize="@dimen/text_size_12"/>
 
                 <TextView
+                    android:id="@+id/tv_nickname"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="型号 : L801"
+                    android:text="楠竹"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="型号 : "
                     android:textColor="@color/text_4a"
+                    android:textSize="@dimen/text_size_12"/>
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L801"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_12"/>
             </LinearLayout>
 
@@ -67,6 +83,7 @@
                     android:textSize="@dimen/text_size_12"/>
 
                 <TextView
+                    android:id="@+id/tv_mode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -82,6 +99,7 @@
                     android:textSize="@dimen/text_size_12"/>
 
                 <TextView
+                    android:id="@+id/tv_ip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="192.168.1.1"
@@ -105,6 +123,7 @@
                     android:textSize="@dimen/text_size_12"/>
 
                 <TextView
+                    android:id="@+id/tv_printCount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -120,6 +139,7 @@
                     android:textSize="@dimen/text_size_12"/>
 
                 <TextView
+                    android:id="@+id/tv_printNewCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="108"
@@ -148,6 +168,7 @@
             android:textSize="@dimen/text_size_13"/>
 
         <TextView
+            android:id="@+id/tv_createdAt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

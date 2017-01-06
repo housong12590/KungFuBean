@@ -6,9 +6,11 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.iiseeuu.helper.R;
+import com.iiseeuu.helper.activity.ImagePreviewActivity;
 import com.iiseeuu.helper.adapter.OrdersListAdapter;
 import com.iiseeuu.helper.base.BaseFragment;
 import com.iiseeuu.helper.entity.Orders;
+import com.iiseeuu.helper.entity.OrdersEntity;
 import com.iiseeuu.helper.http.BaseRespFunc;
 import com.iiseeuu.helper.http.BaseSubscriber;
 import com.iiseeuu.helper.http.HttpModule;
@@ -29,7 +31,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Date: 2016/12/24 11:45
  */
 public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener, OnRefreshListener,
-        BaseQuickAdapter.OnRecyclerViewItemClickListener {
+        BaseQuickAdapter.OnRecyclerViewItemClickListener, BaseQuickAdapter.OnRecyclerViewItemChildClickListener {
 
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
@@ -56,7 +58,7 @@ public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.Req
     public void setListener() {
         adapter.setOnLoadMoreListener(this);
         adapter.setOnRecyclerViewItemClickListener(this);
-
+        adapter.setOnRecyclerViewItemChildClickListener(this);
     }
 
     @Override
@@ -104,5 +106,15 @@ public class OrdersFragment extends BaseFragment implements BaseQuickAdapter.Req
     public void onItemClick(View view, int i) {
 //        OrdersEntity item = (OrdersEntity) adapter.getItem(i);
 //        OrdersDetailActivity.start(getActivity(),item.getId());
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int i) {
+        OrdersEntity item = (OrdersEntity) adapter.getItem(i);
+        switch (view.getId()){
+            case R.id.image:
+                ImagePreviewActivity.start(getActivity(),item.getFinishUrl());
+                break;
+        }
     }
 }
